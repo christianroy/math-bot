@@ -1,3 +1,8 @@
+# Mathbot - Sandbox / prototyping bot
+
+This is my sandbox for exprimenting with Recast.ai, based on their starter kit.
+
+
 # Recast.AI starter kit NodeJS
 
 A starter kit for developing bots on the [Recast.AI](https://recast.ai) platform.
