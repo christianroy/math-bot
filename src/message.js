@@ -17,8 +17,12 @@ const replyMessage = (message) => {
   const sendOut = (result) => {
     console.log("Trying to send ", result)
     message.addReply(result)
-    message.reply().then(() => {
+    message.reply()
+    .then(() => {
       console.log("Done.")
+    })
+    .catch(err => {
+      console.error('Errror while sending out to channel', err)
     })
   }
 
@@ -72,7 +76,8 @@ const replyMessage = (message) => {
             getImage().then(res => sendOut(res))
             break
           case 'aide':
-            help().then(res => sendOut(res))
+            help()
+            .then(res => sendOut(res))
             break
         }
       }
