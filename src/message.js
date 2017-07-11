@@ -9,6 +9,7 @@ const operations = require('./operations')
 const getNumber = require('./getnumber')
 const help = require('./help')
 const getImage = require('./image')
+const lastResult = require('./lastresult')
 
 
 // This function is the core of the bot behaviour
@@ -67,7 +68,13 @@ const replyMessage = (message) => {
         console.log("Will process the action...")
         switch (result.action.slug) {
           case 'summing-numbers':
-            operations(result.getMemory('operand1').raw, result.getMemory('operand2').raw).then(res => sendOut(res))
+            var operand1 = result.getMemory('operand1').raw
+            if (result.getMemory('operand2')) {
+              var operand2 = result.getMemory('operand2').raw
+            } else {
+              var operand2 = result.getMemory('previous-result').value
+            }
+            operations(result, operand1, operand2).then(res => sendOut(res))
             break
           case 'getting-a-number':
             getNumber(result.getMemory('number-type').raw).then(res => sendOut(res))
@@ -77,6 +84,10 @@ const replyMessage = (message) => {
             break
           case 'aide':
             help()
+            .then(res => sendOut(res))
+            break
+          case 'reminder-last-result':
+            lastResult(result)
             .then(res => sendOut(res))
             break
         }
